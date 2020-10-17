@@ -50,3 +50,9 @@ p {
 .github.nav footer.active a {
   color: grey !important;
 }
+
+@media only screen and (min-width: 768px) {
+  #grid {
+    width: 50%;
+  }
+}
