@@ -1,0 +1,52 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+body {
+  line-height: 1.618;
+  background: radial-gradient(circle, rgba(255,152,115,1) 27%, rgba(144,195,255,1) 85%);
+  height: 100%;
+  color: #333333;
+}
+
+h1 {
+  font-size: 2.5em;
+  text-align: center;
+  color: #ffffff;
+  padding-top: 30px;
+}
+
+h2 {
+  font-size: 2em;
+  text-align: center;
+  color: #1c1c1c;
+}
+
+p {
+  font-size: 1.5em;
+  text-align: center;
+  color: #ffffff;
+}
+
+#grid {
+  display: grid;
+  width: 90%;
+  margin: auto;
+}
+
+#input {
+  justify-content: center;
+  align-content: center;
+  font-size: 1.5em;
+  text-align: center;
+  color: #1c1c1c;
+}
+
+.github.nav footer.active a {
+  color: grey !important;
+}

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel='stylesheet' href='css/styles.css' />
+    <title>Landon - Creative Lab 2</title>
+</head>
+
+<body>
+    <div id="grid">
+        <div id="title">
+            <h1>Nearest Electric Vehicle Charger</h1>
+            <br>
+            <h2>Geolocation requires https, so coordinates must be added manually. If left blank, it autofills with the
+                coordinates to the TMCB.<br>
+            </h2>
+        </div>
+
+        <br>
+        <form id="input">
+            <label for="lat">Latitude: </label><br>
+            <input type="text" id="lat" value=""><br>
+            <label for="lon">Longitude: </label><br>
+            <input type="text" id="lon" value=""><br><br>
+            <input id="get" type="submit" value="Find Nearest Charger">
+        </form>
+
+        <div id="nearest"></div>
+
+        <footer class="page-footer font-small gray">
+            <div class="footer-copyright text-center py-3">Landon Towers -
+                <a href="https://github.com/landontowers/CS260-CL2">Creative Lab 2</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let key = "d470f6b8-2b99-4367-bc3d-5c28483cd594";
+        let lat = 40.2499102;
+        let lon = -111.6521615;
+
+        document.getElementById("get").addEventListener("click", function (event) {
+            event.preventDefault();
+            // if (document.getElementById(lat).value !== "" || document.getElementById(lon).value !== "") {
+            //     let loc = await navigator.geolocation.getCurrentPosition();
+            //     lat = loc.coords.latitude;
+            //     lon = loc.coords.longitude;
+            // }
+
+            let url = "https://api.openchargemap.io/v3/poi/?maxresults=3&includecomments=true&key=" + key +
+                "&latitude=" + lat + "&longitude=" + lon;
+
+            fetch(url)
+                .then((res) => {
+                    return res.json();
+                }).then((res) => {
+                    let data = "";
+
+                    if(res[0].OperatorInfo)
+                        data += "<h1>" + res[0].AddressInfo.Title + " - " + res[0].OperatorInfo.Title + "</h1><br>";
+                    else
+                        data += "<h1>" + res[0].AddressInfo.Title + "</h1><br>";
+                    data += "<h2>" + res[0].AddressInfo.AddressLine1 + "</h2>";
+                    data += "<h2>" + res[0].AddressInfo.Town + "," + res[0].AddressInfo.StateOrProvince +
+                        " " + res[0].AddressInfo.Postcode + "</h2><br>";
+                    if (res[0].AddressInfo.Distance)
+                        data += "<p>Distance: " + Math.ceil(res[0].AddressInfo.Distance) + " miles<br>";
+                    if (res[0].UsageType)
+                        data += "Type: " + res[0].UsageType.Title + "<br>";
+                    data += "Availability: " + res[0].AddressInfo.AccessComments + "</p>";
+                    document.getElementById("title").innerHTML = data;
+                })
+        });
+    </script>
+</body>
+
+</html>
